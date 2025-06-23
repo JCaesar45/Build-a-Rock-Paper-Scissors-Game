@@ -1,0 +1,80 @@
+** start of script.js **
+
+// Global variables for score tracking
+let humanScore = 0;
+let computerScore = 0;
+
+// Returns a random choice for the computer
+function getComputerChoice() {
+  const hand = ['rock', 'paper', 'scissors'];
+  const randomIndex = Math.floor(Math.random() * hand.length);
+  return hand[randomIndex];
+}
+
+// Prompts the user and returns their choice
+function getHumanChoice() {
+  let choice = prompt("Enter rock, paper, or scissors:");
+  while (!choice || !["rock", "paper", "scissors"].includes(choice.toLowerCase())) {
+    choice = prompt("Invalid input. Please enter rock, paper, or scissors:");
+  }
+  return choice.toLowerCase();
+}
+
+// Plays a single round
+function playRound(humanChoice, computerChoice) {
+  humanChoice = humanChoice.toLowerCase();
+  const winMessage = `You win! ${humanChoice} beats ${computerChoice}`;
+  const loseMessage = `You lose! ${computerChoice} beats ${humanChoice}`;
+
+  if (humanChoice === computerChoice) {
+    return "It's a tie!";
+  }
+
+  if (
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "paper" && computerChoice === "rock") ||
+    (humanChoice === "scissors" && computerChoice === "paper")
+  ) {
+    humanScore++;
+    return winMessage;
+  } else {
+    computerScore++;
+    return loseMessage;
+  }
+}
+
+// Plays 3 rounds of the game
+function playGame() {
+  for (let i = 1; i <= 3; i++) {
+    const humanChoice = getHumanChoice();
+    const computerChoice = getComputerChoice();
+    const result = playRound(humanChoice, computerChoice);
+    console.log(`Round ${i}: ${result}`);
+    console.log(`Score => Human: ${humanScore} | Computer: ${computerScore}`);
+  }
+
+  if (humanScore > computerScore) {
+    return "You win the game!";
+  } else if (computerScore > humanScore) {
+    return "You lose the game!";
+  } else {
+    return "The game is a tie!";
+  }
+}
+
+// Start the game
+console.log(playGame());
+
+
+** end of script.js **
+
+** start of index.html **
+
+<html lang="en">
+<head>
+  <script src="script.js"></script>
+</head>
+</html>
+
+** end of index.html **
+
